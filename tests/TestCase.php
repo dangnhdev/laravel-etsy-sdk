@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Hdecom\EtsySdk\Tests;
 
 use Hdecom\EtsySdk\EtsySdkServiceProvider;
