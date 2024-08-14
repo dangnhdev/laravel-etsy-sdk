@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Hdecom\EtsySdk;
 
+use Hdecom\EtsySdk\Commands\EtsySdkCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use Hdecom\EtsySdk\Commands\EtsySdkCommand;
 
 class EtsySdkServiceProvider extends PackageServiceProvider
 {
@@ -17,9 +19,9 @@ class EtsySdkServiceProvider extends PackageServiceProvider
          */
         $package
             ->name('laravel-etsy-sdk')
-            ->hasConfigFile()
-            ->hasViews()
-            ->hasMigration('create_laravel_etsy_sdk_table')
+//            ->hasConfigFile()
+//            ->hasViews()
+//            ->hasMigration('create_laravel_etsy_sdk_table')
             ->hasCommand(EtsySdkCommand::class);
     }
 }
