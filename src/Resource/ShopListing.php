@@ -85,11 +85,11 @@ class ShopListing extends Resource
      * @param  string  $shopLocation  Filters by shop location. If location cannot be parsed, Etsy responds with an error.
      */
     public function findAllListingsActive(
-        ?int $limit = null,
-        ?int $offset = null,
-        ?string $keywords = null,
-        ?string $sortOn = null,
-        ?string $sortOrder = null,
+        ?int $limit,
+        ?int $offset,
+        ?string $keywords,
+        ?string $sortOn,
+        ?string $sortOrder,
         float|int|null $minPrice,
         float|int|null $maxPrice,
         ?int $taxonomyId = null,
