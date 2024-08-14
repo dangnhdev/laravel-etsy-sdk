@@ -2,9 +2,9 @@
 
 namespace Hdecom\EtsySdk\Tests;
 
+use Hdecom\EtsySdk\EtsySdkServiceProvider;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Orchestra\Testbench\TestCase as Orchestra;
-use Hdecom\EtsySdk\EtsySdkServiceProvider;
 
 class TestCase extends Orchestra
 {

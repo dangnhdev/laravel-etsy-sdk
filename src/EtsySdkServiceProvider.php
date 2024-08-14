@@ -2,9 +2,9 @@
 
 namespace Hdecom\EtsySdk;
 
+use Hdecom\EtsySdk\Commands\EtsySdkCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use Hdecom\EtsySdk\Commands\EtsySdkCommand;
 
 class EtsySdkServiceProvider extends PackageServiceProvider
 {
