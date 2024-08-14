@@ -1,8 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Hdecom\EtsySdk\Requests\ShopListingOffering;
 
-use DateTime;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 
@@ -20,24 +21,16 @@ use Saloon\Http\Request;
  */
 class GetListingOffering extends Request
 {
-	protected Method $method = Method::GET;
+    protected Method $method = Method::GET;
 
+    public function resolveEndpoint(): string
+    {
+        return "/v3/application/listings/{$this->listingId}/products/{$this->productId}/offerings/{$this->productOfferingId}";
+    }
 
-	public function resolveEndpoint(): string
-	{
-		return "/v3/application/listings/{$this->listingId}/products/{$this->productId}/offerings/{$this->productOfferingId}";
-	}
-
-
-	/**
-	 * @param int $listingId
-	 * @param int $productId
-	 * @param int $productOfferingId
-	 */
-	public function __construct(
-		protected int $listingId,
-		protected int $productId,
-		protected int $productOfferingId,
-	) {
-	}
+    public function __construct(
+        protected int $listingId,
+        protected int $productId,
+        protected int $productOfferingId,
+    ) {}
 }

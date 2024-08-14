@@ -1,8 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Hdecom\EtsySdk\Requests\ShopListing;
 
-use DateTime;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 
@@ -20,22 +21,19 @@ use Saloon\Http\Request;
  */
 class GetListingsByShopReturnPolicy extends Request
 {
-	protected Method $method = Method::GET;
+    protected Method $method = Method::GET;
 
+    public function resolveEndpoint(): string
+    {
+        return "/v3/application/shops/{$this->shopId}/policies/return/{$this->returnPolicyId}/listings";
+    }
 
-	public function resolveEndpoint(): string
-	{
-		return "/v3/application/shops/{$this->shopId}/policies/return/{$this->returnPolicyId}/listings";
-	}
-
-
-	/**
-	 * @param int $returnPolicyId The numeric ID of the [Return Policy](/documentation/reference#operation/getShopReturnPolicies).
-	 * @param int $shopId The unique positive non-zero numeric ID for an Etsy Shop.
-	 */
-	public function __construct(
-		protected int $returnPolicyId,
-		protected int $shopId,
-	) {
-	}
+    /**
+     * @param  int  $returnPolicyId  The numeric ID of the [Return Policy](/documentation/reference#operation/getShopReturnPolicies).
+     * @param  int  $shopId  The unique positive non-zero numeric ID for an Etsy Shop.
+     */
+    public function __construct(
+        protected int $returnPolicyId,
+        protected int $shopId,
+    ) {}
 }

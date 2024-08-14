@@ -1,8 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Hdecom\EtsySdk\Requests\Payment;
 
-use DateTime;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 
@@ -21,22 +22,19 @@ use Saloon\Http\Request;
  */
 class GetShopPaymentByReceiptId extends Request
 {
-	protected Method $method = Method::GET;
+    protected Method $method = Method::GET;
 
+    public function resolveEndpoint(): string
+    {
+        return "/v3/application/shops/{$this->shopId}/receipts/{$this->receiptId}/payments";
+    }
 
-	public function resolveEndpoint(): string
-	{
-		return "/v3/application/shops/{$this->shopId}/receipts/{$this->receiptId}/payments";
-	}
-
-
-	/**
-	 * @param int $shopId The unique positive non-zero numeric ID for an Etsy Shop.
-	 * @param int $receiptId The numeric ID for the [receipt](/documentation/reference#tag/Shop-Receipt) associated to this transaction.
-	 */
-	public function __construct(
-		protected int $shopId,
-		protected int $receiptId,
-	) {
-	}
+    /**
+     * @param  int  $shopId  The unique positive non-zero numeric ID for an Etsy Shop.
+     * @param  int  $receiptId  The numeric ID for the [receipt](/documentation/reference#tag/Shop-Receipt) associated to this transaction.
+     */
+    public function __construct(
+        protected int $shopId,
+        protected int $receiptId,
+    ) {}
 }

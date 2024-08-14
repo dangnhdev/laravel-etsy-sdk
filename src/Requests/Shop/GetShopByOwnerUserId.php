@@ -1,8 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Hdecom\EtsySdk\Requests\Shop;
 
-use DateTime;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 
@@ -20,20 +21,17 @@ use Saloon\Http\Request;
  */
 class GetShopByOwnerUserId extends Request
 {
-	protected Method $method = Method::GET;
+    protected Method $method = Method::GET;
 
+    public function resolveEndpoint(): string
+    {
+        return "/v3/application/users/{$this->userId}/shops";
+    }
 
-	public function resolveEndpoint(): string
-	{
-		return "/v3/application/users/{$this->userId}/shops";
-	}
-
-
-	/**
-	 * @param int $userId The numeric user ID of the [user](/documentation/reference#tag/User) who owns this shop.
-	 */
-	public function __construct(
-		protected int $userId,
-	) {
-	}
+    /**
+     * @param  int  $userId  The numeric user ID of the [user](/documentation/reference#tag/User) who owns this shop.
+     */
+    public function __construct(
+        protected int $userId,
+    ) {}
 }

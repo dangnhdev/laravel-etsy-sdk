@@ -1,8 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Hdecom\EtsySdk\Requests\ShopReceiptTransactions;
 
-use DateTime;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 
@@ -20,32 +21,28 @@ use Saloon\Http\Request;
  */
 class GetShopReceiptTransactionsByListing extends Request
 {
-	protected Method $method = Method::GET;
+    protected Method $method = Method::GET;
 
+    public function resolveEndpoint(): string
+    {
+        return "/v3/application/shops/{$this->shopId}/listings/{$this->listingId}/transactions";
+    }
 
-	public function resolveEndpoint(): string
-	{
-		return "/v3/application/shops/{$this->shopId}/listings/{$this->listingId}/transactions";
-	}
+    /**
+     * @param  int  $shopId  The unique positive non-zero numeric ID for an Etsy Shop.
+     * @param  int  $listingId  The numeric ID for the [listing](/documentation/reference#tag/ShopListing) associated to this transaction.
+     * @param  null|int  $limit  The maximum number of results to return.
+     * @param  null|int  $offset  The number of records to skip before selecting the first result.
+     */
+    public function __construct(
+        protected int $shopId,
+        protected int $listingId,
+        protected ?int $limit = null,
+        protected ?int $offset = null,
+    ) {}
 
-
-	/**
-	 * @param int $shopId The unique positive non-zero numeric ID for an Etsy Shop.
-	 * @param int $listingId The numeric ID for the [listing](/documentation/reference#tag/ShopListing) associated to this transaction.
-	 * @param null|int $limit The maximum number of results to return.
-	 * @param null|int $offset The number of records to skip before selecting the first result.
-	 */
-	public function __construct(
-		protected int $shopId,
-		protected int $listingId,
-		protected ?int $limit = null,
-		protected ?int $offset = null,
-	) {
-	}
-
-
-	public function defaultQuery(): array
-	{
-		return array_filter(['limit' => $this->limit, 'offset' => $this->offset]);
-	}
+    public function defaultQuery(): array
+    {
+        return array_filter(['limit' => $this->limit, 'offset' => $this->offset]);
+    }
 }

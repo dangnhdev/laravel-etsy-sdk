@@ -1,8 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Hdecom\EtsySdk\Requests\ShopListing;
 
-use DateTime;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 
@@ -20,32 +21,28 @@ use Saloon\Http\Request;
  */
 class GetListingsByShopReceipt extends Request
 {
-	protected Method $method = Method::GET;
+    protected Method $method = Method::GET;
 
+    public function resolveEndpoint(): string
+    {
+        return "/v3/application/shops/{$this->shopId}/receipts/{$this->receiptId}/listings";
+    }
 
-	public function resolveEndpoint(): string
-	{
-		return "/v3/application/shops/{$this->shopId}/receipts/{$this->receiptId}/listings";
-	}
+    /**
+     * @param  int  $receiptId  The numeric ID for the [receipt](/documentation/reference#tag/Shop-Receipt) associated to this transaction.
+     * @param  int  $shopId  The unique positive non-zero numeric ID for an Etsy Shop.
+     * @param  null|int  $limit  The maximum number of results to return.
+     * @param  null|int  $offset  The number of records to skip before selecting the first result.
+     */
+    public function __construct(
+        protected int $receiptId,
+        protected int $shopId,
+        protected ?int $limit = null,
+        protected ?int $offset = null,
+    ) {}
 
-
-	/**
-	 * @param int $receiptId The numeric ID for the [receipt](/documentation/reference#tag/Shop-Receipt) associated to this transaction.
-	 * @param int $shopId The unique positive non-zero numeric ID for an Etsy Shop.
-	 * @param null|int $limit The maximum number of results to return.
-	 * @param null|int $offset The number of records to skip before selecting the first result.
-	 */
-	public function __construct(
-		protected int $receiptId,
-		protected int $shopId,
-		protected ?int $limit = null,
-		protected ?int $offset = null,
-	) {
-	}
-
-
-	public function defaultQuery(): array
-	{
-		return array_filter(['limit' => $this->limit, 'offset' => $this->offset]);
-	}
+    public function defaultQuery(): array
+    {
+        return array_filter(['limit' => $this->limit, 'offset' => $this->offset]);
+    }
 }

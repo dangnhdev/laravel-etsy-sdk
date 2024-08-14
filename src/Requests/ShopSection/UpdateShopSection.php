@@ -1,8 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Hdecom\EtsySdk\Requests\ShopSection;
 
-use DateTime;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 
@@ -20,22 +21,19 @@ use Saloon\Http\Request;
  */
 class UpdateShopSection extends Request
 {
-	protected Method $method = Method::PUT;
+    protected Method $method = Method::PUT;
 
+    public function resolveEndpoint(): string
+    {
+        return "/v3/application/shops/{$this->shopId}/sections/{$this->shopSectionId}";
+    }
 
-	public function resolveEndpoint(): string
-	{
-		return "/v3/application/shops/{$this->shopId}/sections/{$this->shopSectionId}";
-	}
-
-
-	/**
-	 * @param int $shopId The unique positive non-zero numeric ID for an Etsy Shop.
-	 * @param int $shopSectionId The numeric ID of a section in a specific Etsy shop.
-	 */
-	public function __construct(
-		protected int $shopId,
-		protected int $shopSectionId,
-	) {
-	}
+    /**
+     * @param  int  $shopId  The unique positive non-zero numeric ID for an Etsy Shop.
+     * @param  int  $shopSectionId  The numeric ID of a section in a specific Etsy shop.
+     */
+    public function __construct(
+        protected int $shopId,
+        protected int $shopSectionId,
+    ) {}
 }

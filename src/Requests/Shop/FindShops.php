@@ -1,8 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Hdecom\EtsySdk\Requests\Shop;
 
-use DateTime;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 
@@ -22,30 +23,26 @@ use Saloon\Http\Request;
  */
 class FindShops extends Request
 {
-	protected Method $method = Method::GET;
+    protected Method $method = Method::GET;
 
+    public function resolveEndpoint(): string
+    {
+        return '/v3/application/shops';
+    }
 
-	public function resolveEndpoint(): string
-	{
-		return "/v3/application/shops";
-	}
+    /**
+     * @param  string  $shopName  The shop's name string.
+     * @param  null|int  $limit  The maximum number of results to return.
+     * @param  null|int  $offset  The number of records to skip before selecting the first result.
+     */
+    public function __construct(
+        protected string $shopName,
+        protected ?int $limit = null,
+        protected ?int $offset = null,
+    ) {}
 
-
-	/**
-	 * @param string $shopName The shop's name string.
-	 * @param null|int $limit The maximum number of results to return.
-	 * @param null|int $offset The number of records to skip before selecting the first result.
-	 */
-	public function __construct(
-		protected string $shopName,
-		protected ?int $limit = null,
-		protected ?int $offset = null,
-	) {
-	}
-
-
-	public function defaultQuery(): array
-	{
-		return array_filter(['shop_name' => $this->shopName, 'limit' => $this->limit, 'offset' => $this->offset]);
-	}
+    public function defaultQuery(): array
+    {
+        return array_filter(['shop_name' => $this->shopName, 'limit' => $this->limit, 'offset' => $this->offset]);
+    }
 }

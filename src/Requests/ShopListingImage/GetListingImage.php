@@ -1,8 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Hdecom\EtsySdk\Requests\ShopListingImage;
 
-use DateTime;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 
@@ -20,22 +21,19 @@ use Saloon\Http\Request;
  */
 class GetListingImage extends Request
 {
-	protected Method $method = Method::GET;
+    protected Method $method = Method::GET;
 
+    public function resolveEndpoint(): string
+    {
+        return "/v3/application/listings/{$this->listingId}/images/{$this->listingImageId}";
+    }
 
-	public function resolveEndpoint(): string
-	{
-		return "/v3/application/listings/{$this->listingId}/images/{$this->listingImageId}";
-	}
-
-
-	/**
-	 * @param int $listingId The numeric ID for the [listing](/documentation/reference#tag/ShopListing) associated to this transaction.
-	 * @param int $listingImageId The numeric ID of the primary [listing image](/documentation/reference#tag/ShopListing-Image) for this transaction.
-	 */
-	public function __construct(
-		protected int $listingId,
-		protected int $listingImageId,
-	) {
-	}
+    /**
+     * @param  int  $listingId  The numeric ID for the [listing](/documentation/reference#tag/ShopListing) associated to this transaction.
+     * @param  int  $listingImageId  The numeric ID of the primary [listing image](/documentation/reference#tag/ShopListing-Image) for this transaction.
+     */
+    public function __construct(
+        protected int $listingId,
+        protected int $listingImageId,
+    ) {}
 }

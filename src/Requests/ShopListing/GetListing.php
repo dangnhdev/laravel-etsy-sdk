@@ -1,8 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Hdecom\EtsySdk\Requests\ShopListing;
 
-use DateTime;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 
@@ -20,30 +21,26 @@ use Saloon\Http\Request;
  */
 class GetListing extends Request
 {
-	protected Method $method = Method::GET;
+    protected Method $method = Method::GET;
 
+    public function resolveEndpoint(): string
+    {
+        return "/v3/application/listings/{$this->listingId}";
+    }
 
-	public function resolveEndpoint(): string
-	{
-		return "/v3/application/listings/{$this->listingId}";
-	}
+    /**
+     * @param  int  $listingId  The numeric ID for the [listing](/documentation/reference#tag/ShopListing) associated to this transaction.
+     * @param  null|array  $includes  An enumerated string that attaches a valid association. Acceptable inputs are 'Shipping', 'Shop', 'Images', 'User', 'Translations' and 'Inventory'.
+     * @param  null|string  $language  The IETF language tag for the language of this translation. Ex: `de`, `en`, `es`, `fr`, `it`, `ja`, `nl`, `pl`, `pt`.
+     */
+    public function __construct(
+        protected int $listingId,
+        protected ?array $includes = null,
+        protected ?string $language = null,
+    ) {}
 
-
-	/**
-	 * @param int $listingId The numeric ID for the [listing](/documentation/reference#tag/ShopListing) associated to this transaction.
-	 * @param null|array $includes An enumerated string that attaches a valid association. Acceptable inputs are 'Shipping', 'Shop', 'Images', 'User', 'Translations' and 'Inventory'.
-	 * @param null|string $language The IETF language tag for the language of this translation. Ex: `de`, `en`, `es`, `fr`, `it`, `ja`, `nl`, `pl`, `pt`.
-	 */
-	public function __construct(
-		protected int $listingId,
-		protected ?array $includes = null,
-		protected ?string $language = null,
-	) {
-	}
-
-
-	public function defaultQuery(): array
-	{
-		return array_filter(['includes' => $this->includes, 'language' => $this->language]);
-	}
+    public function defaultQuery(): array
+    {
+        return array_filter(['includes' => $this->includes, 'language' => $this->language]);
+    }
 }

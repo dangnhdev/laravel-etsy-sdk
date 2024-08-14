@@ -1,8 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Hdecom\EtsySdk\Requests\Payment;
 
-use DateTime;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 
@@ -21,28 +22,24 @@ use Saloon\Http\Request;
  */
 class GetPayments extends Request
 {
-	protected Method $method = Method::GET;
+    protected Method $method = Method::GET;
 
+    public function resolveEndpoint(): string
+    {
+        return "/v3/application/shops/{$this->shopId}/payments";
+    }
 
-	public function resolveEndpoint(): string
-	{
-		return "/v3/application/shops/{$this->shopId}/payments";
-	}
+    /**
+     * @param  int  $shopId  The unique positive non-zero numeric ID for an Etsy Shop.
+     * @param  array  $paymentIds  A comma-separated array of Payment IDs numbers.
+     */
+    public function __construct(
+        protected int $shopId,
+        protected array $paymentIds,
+    ) {}
 
-
-	/**
-	 * @param int $shopId The unique positive non-zero numeric ID for an Etsy Shop.
-	 * @param array $paymentIds A comma-separated array of Payment IDs numbers.
-	 */
-	public function __construct(
-		protected int $shopId,
-		protected array $paymentIds,
-	) {
-	}
-
-
-	public function defaultQuery(): array
-	{
-		return array_filter(['payment_ids' => $this->paymentIds]);
-	}
+    public function defaultQuery(): array
+    {
+        return array_filter(['payment_ids' => $this->paymentIds]);
+    }
 }

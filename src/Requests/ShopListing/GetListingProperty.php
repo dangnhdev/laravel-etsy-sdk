@@ -1,8 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Hdecom\EtsySdk\Requests\ShopListing;
 
-use DateTime;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 
@@ -20,22 +21,19 @@ use Saloon\Http\Request;
  */
 class GetListingProperty extends Request
 {
-	protected Method $method = Method::GET;
+    protected Method $method = Method::GET;
 
+    public function resolveEndpoint(): string
+    {
+        return "/v3/application/listings/{$this->listingId}/properties/{$this->propertyId}";
+    }
 
-	public function resolveEndpoint(): string
-	{
-		return "/v3/application/listings/{$this->listingId}/properties/{$this->propertyId}";
-	}
-
-
-	/**
-	 * @param int $listingId The numeric ID for the [listing](/documentation/reference#tag/ShopListing) associated to this transaction.
-	 * @param int $propertyId The unique ID of an Etsy [listing property](/documentation/reference#operation/getListingProperties).
-	 */
-	public function __construct(
-		protected int $listingId,
-		protected int $propertyId,
-	) {
-	}
+    /**
+     * @param  int  $listingId  The numeric ID for the [listing](/documentation/reference#tag/ShopListing) associated to this transaction.
+     * @param  int  $propertyId  The unique ID of an Etsy [listing property](/documentation/reference#operation/getListingProperties).
+     */
+    public function __construct(
+        protected int $listingId,
+        protected int $propertyId,
+    ) {}
 }

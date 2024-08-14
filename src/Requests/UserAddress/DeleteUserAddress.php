@@ -1,8 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Hdecom\EtsySdk\Requests\UserAddress;
 
-use DateTime;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 
@@ -20,20 +21,17 @@ use Saloon\Http\Request;
  */
 class DeleteUserAddress extends Request
 {
-	protected Method $method = Method::DELETE;
+    protected Method $method = Method::DELETE;
 
+    public function resolveEndpoint(): string
+    {
+        return "/v3/application/user/addresses/{$this->userAddressId}";
+    }
 
-	public function resolveEndpoint(): string
-	{
-		return "/v3/application/user/addresses/{$this->userAddressId}";
-	}
-
-
-	/**
-	 * @param int $userAddressId The numeric ID of the user's address.
-	 */
-	public function __construct(
-		protected int $userAddressId,
-	) {
-	}
+    /**
+     * @param  int  $userAddressId  The numeric ID of the user's address.
+     */
+    public function __construct(
+        protected int $userAddressId,
+    ) {}
 }
