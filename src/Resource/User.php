@@ -1,18 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Hdecom\EtsySdk\Resource;
 
 use Hdecom\EtsySdk\Requests\User\GetUser;
 use Hdecom\EtsySdk\Resource;
-use Saloon\Contracts\Response;
+use Saloon\Http\Response;
 
 class User extends Resource
 {
-	/**
-	 * @param int $userId
-	 */
-	public function getUser(int $userId): Response
-	{
-		return $this->connector->send(new GetUser($userId));
-	}
+    public function getUser(int $userId): Response
+    {
+        return $this->connector->send(new GetUser($userId));
+    }
 }

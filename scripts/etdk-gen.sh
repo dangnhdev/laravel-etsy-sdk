@@ -12,3 +12,7 @@ sdkgenerator generate:sdk ./etsy-v3.json \
   --type=openapi --name EtsySdk \
   --output="../src" \
   --namespace=Hdecom\\EtsySdk --force
+
+# TODO: replace all in src:
+# use Saloon\Contracts\Response;
+# use Saloon\Http\Response;
