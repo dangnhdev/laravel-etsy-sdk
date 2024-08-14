@@ -1,8 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Hdecom\EtsySdk\Requests\LedgerEntry;
 
-use DateTime;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 
@@ -20,39 +21,35 @@ use Saloon\Http\Request;
  */
 class GetShopPaymentAccountLedgerEntries extends Request
 {
-	protected Method $method = Method::GET;
+    protected Method $method = Method::GET;
 
+    public function resolveEndpoint(): string
+    {
+        return "/v3/application/shops/{$this->shopId}/payment-account/ledger-entries";
+    }
 
-	public function resolveEndpoint(): string
-	{
-		return "/v3/application/shops/{$this->shopId}/payment-account/ledger-entries";
-	}
+    /**
+     * @param  int  $shopId  The unique positive non-zero numeric ID for an Etsy Shop.
+     * @param  int  $minCreated  The earliest unix timestamp for when a record was created.
+     * @param  int  $maxCreated  The latest unix timestamp for when a record was created.
+     * @param  null|int  $limit  The maximum number of results to return.
+     * @param  null|int  $offset  The number of records to skip before selecting the first result.
+     */
+    public function __construct(
+        protected int $shopId,
+        protected int $minCreated,
+        protected int $maxCreated,
+        protected ?int $limit = null,
+        protected ?int $offset = null,
+    ) {}
 
-
-	/**
-	 * @param int $shopId The unique positive non-zero numeric ID for an Etsy Shop.
-	 * @param int $minCreated The earliest unix timestamp for when a record was created.
-	 * @param int $maxCreated The latest unix timestamp for when a record was created.
-	 * @param null|int $limit The maximum number of results to return.
-	 * @param null|int $offset The number of records to skip before selecting the first result.
-	 */
-	public function __construct(
-		protected int $shopId,
-		protected int $minCreated,
-		protected int $maxCreated,
-		protected ?int $limit = null,
-		protected ?int $offset = null,
-	) {
-	}
-
-
-	public function defaultQuery(): array
-	{
-		return array_filter([
-			'min_created' => $this->minCreated,
-			'max_created' => $this->maxCreated,
-			'limit' => $this->limit,
-			'offset' => $this->offset,
-		]);
-	}
+    public function defaultQuery(): array
+    {
+        return array_filter([
+            'min_created' => $this->minCreated,
+            'max_created' => $this->maxCreated,
+            'limit' => $this->limit,
+            'offset' => $this->offset,
+        ]);
+    }
 }

@@ -1,8 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Hdecom\EtsySdk\Requests\ShopListing;
 
-use DateTime;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 
@@ -20,28 +21,24 @@ use Saloon\Http\Request;
  */
 class GetListingsByListingIds extends Request
 {
-	protected Method $method = Method::GET;
+    protected Method $method = Method::GET;
 
+    public function resolveEndpoint(): string
+    {
+        return '/v3/application/listings/batch';
+    }
 
-	public function resolveEndpoint(): string
-	{
-		return "/v3/application/listings/batch";
-	}
+    /**
+     * @param  array  $listingIds  The list of numeric IDS for the listings in a specific Etsy shop.
+     * @param  null|array  $includes  An enumerated string that attaches a valid association. Acceptable inputs are 'Shipping', 'Shop', 'Images', 'User', 'Translations' and 'Inventory'.
+     */
+    public function __construct(
+        protected array $listingIds,
+        protected ?array $includes = null,
+    ) {}
 
-
-	/**
-	 * @param array $listingIds The list of numeric IDS for the listings in a specific Etsy shop.
-	 * @param null|array $includes An enumerated string that attaches a valid association. Acceptable inputs are 'Shipping', 'Shop', 'Images', 'User', 'Translations' and 'Inventory'.
-	 */
-	public function __construct(
-		protected array $listingIds,
-		protected ?array $includes = null,
-	) {
-	}
-
-
-	public function defaultQuery(): array
-	{
-		return array_filter(['listing_ids' => $this->listingIds, 'includes' => $this->includes]);
-	}
+    public function defaultQuery(): array
+    {
+        return array_filter(['listing_ids' => $this->listingIds, 'includes' => $this->includes]);
+    }
 }

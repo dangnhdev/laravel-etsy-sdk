@@ -1,8 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Hdecom\EtsySdk\Requests\LedgerEntry;
 
-use DateTime;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 
@@ -20,22 +21,19 @@ use Saloon\Http\Request;
  */
 class GetShopPaymentAccountLedgerEntry extends Request
 {
-	protected Method $method = Method::GET;
+    protected Method $method = Method::GET;
 
+    public function resolveEndpoint(): string
+    {
+        return "/v3/application/shops/{$this->shopId}/payment-account/ledger-entries/{$this->ledgerEntryId}";
+    }
 
-	public function resolveEndpoint(): string
-	{
-		return "/v3/application/shops/{$this->shopId}/payment-account/ledger-entries/{$this->ledgerEntryId}";
-	}
-
-
-	/**
-	 * @param int $shopId The unique positive non-zero numeric ID for an Etsy Shop.
-	 * @param int $ledgerEntryId The unique ID of the shop owner ledger entry.
-	 */
-	public function __construct(
-		protected int $shopId,
-		protected int $ledgerEntryId,
-	) {
-	}
+    /**
+     * @param  int  $shopId  The unique positive non-zero numeric ID for an Etsy Shop.
+     * @param  int  $ledgerEntryId  The unique ID of the shop owner ledger entry.
+     */
+    public function __construct(
+        protected int $shopId,
+        protected int $ledgerEntryId,
+    ) {}
 }

@@ -1,8 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Hdecom\EtsySdk\Requests\ShopListingImage;
 
-use DateTime;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 
@@ -22,24 +23,21 @@ use Saloon\Http\Request;
  */
 class DeleteListingImage extends Request
 {
-	protected Method $method = Method::DELETE;
+    protected Method $method = Method::DELETE;
 
+    public function resolveEndpoint(): string
+    {
+        return "/v3/application/shops/{$this->shopId}/listings/{$this->listingId}/images/{$this->listingImageId}";
+    }
 
-	public function resolveEndpoint(): string
-	{
-		return "/v3/application/shops/{$this->shopId}/listings/{$this->listingId}/images/{$this->listingImageId}";
-	}
-
-
-	/**
-	 * @param int $shopId The unique positive non-zero numeric ID for an Etsy Shop.
-	 * @param int $listingId The numeric ID for the [listing](/documentation/reference#tag/ShopListing) associated to this transaction.
-	 * @param int $listingImageId The numeric ID of the primary [listing image](/documentation/reference#tag/ShopListing-Image) for this transaction.
-	 */
-	public function __construct(
-		protected int $shopId,
-		protected int $listingId,
-		protected int $listingImageId,
-	) {
-	}
+    /**
+     * @param  int  $shopId  The unique positive non-zero numeric ID for an Etsy Shop.
+     * @param  int  $listingId  The numeric ID for the [listing](/documentation/reference#tag/ShopListing) associated to this transaction.
+     * @param  int  $listingImageId  The numeric ID of the primary [listing image](/documentation/reference#tag/ShopListing-Image) for this transaction.
+     */
+    public function __construct(
+        protected int $shopId,
+        protected int $listingId,
+        protected int $listingImageId,
+    ) {}
 }

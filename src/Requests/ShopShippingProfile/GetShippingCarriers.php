@@ -1,8 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Hdecom\EtsySdk\Requests\ShopShippingProfile;
 
-use DateTime;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 
@@ -21,26 +22,22 @@ use Saloon\Http\Request;
  */
 class GetShippingCarriers extends Request
 {
-	protected Method $method = Method::GET;
+    protected Method $method = Method::GET;
 
+    public function resolveEndpoint(): string
+    {
+        return '/v3/application/shipping-carriers';
+    }
 
-	public function resolveEndpoint(): string
-	{
-		return "/v3/application/shipping-carriers";
-	}
+    /**
+     * @param  string  $originCountryIso  The ISO code of the country from which the listing ships.
+     */
+    public function __construct(
+        protected string $originCountryIso,
+    ) {}
 
-
-	/**
-	 * @param string $originCountryIso The ISO code of the country from which the listing ships.
-	 */
-	public function __construct(
-		protected string $originCountryIso,
-	) {
-	}
-
-
-	public function defaultQuery(): array
-	{
-		return array_filter(['origin_country_iso' => $this->originCountryIso]);
-	}
+    public function defaultQuery(): array
+    {
+        return array_filter(['origin_country_iso' => $this->originCountryIso]);
+    }
 }

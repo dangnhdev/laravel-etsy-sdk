@@ -1,8 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Hdecom\EtsySdk\Requests\ShopReceipt;
 
-use DateTime;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
@@ -30,24 +31,21 @@ use Saloon\Traits\Body\HasJsonBody;
  */
 class CreateReceiptShipment extends Request implements HasBody
 {
-	use HasJsonBody;
+    use HasJsonBody;
 
-	protected Method $method = Method::POST;
+    protected Method $method = Method::POST;
 
+    public function resolveEndpoint(): string
+    {
+        return "/v3/application/shops/{$this->shopId}/receipts/{$this->receiptId}/tracking";
+    }
 
-	public function resolveEndpoint(): string
-	{
-		return "/v3/application/shops/{$this->shopId}/receipts/{$this->receiptId}/tracking";
-	}
-
-
-	/**
-	 * @param int $shopId The unique positive non-zero numeric ID for an Etsy Shop.
-	 * @param int $receiptId The receipt to submit tracking for.
-	 */
-	public function __construct(
-		protected int $shopId,
-		protected int $receiptId,
-	) {
-	}
+    /**
+     * @param  int  $shopId  The unique positive non-zero numeric ID for an Etsy Shop.
+     * @param  int  $receiptId  The receipt to submit tracking for.
+     */
+    public function __construct(
+        protected int $shopId,
+        protected int $receiptId,
+    ) {}
 }

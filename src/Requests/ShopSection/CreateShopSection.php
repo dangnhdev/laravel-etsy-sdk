@@ -1,8 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Hdecom\EtsySdk\Requests\ShopSection;
 
-use DateTime;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
@@ -22,22 +23,19 @@ use Saloon\Traits\Body\HasJsonBody;
  */
 class CreateShopSection extends Request implements HasBody
 {
-	use HasJsonBody;
+    use HasJsonBody;
 
-	protected Method $method = Method::POST;
+    protected Method $method = Method::POST;
 
+    public function resolveEndpoint(): string
+    {
+        return "/v3/application/shops/{$this->shopId}/sections";
+    }
 
-	public function resolveEndpoint(): string
-	{
-		return "/v3/application/shops/{$this->shopId}/sections";
-	}
-
-
-	/**
-	 * @param int $shopId The unique positive non-zero numeric ID for an Etsy Shop.
-	 */
-	public function __construct(
-		protected int $shopId,
-	) {
-	}
+    /**
+     * @param  int  $shopId  The unique positive non-zero numeric ID for an Etsy Shop.
+     */
+    public function __construct(
+        protected int $shopId,
+    ) {}
 }

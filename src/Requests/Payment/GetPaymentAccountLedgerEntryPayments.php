@@ -1,8 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Hdecom\EtsySdk\Requests\Payment;
 
-use DateTime;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 
@@ -20,28 +21,23 @@ use Saloon\Http\Request;
  */
 class GetPaymentAccountLedgerEntryPayments extends Request
 {
-	protected Method $method = Method::GET;
+    protected Method $method = Method::GET;
 
+    public function resolveEndpoint(): string
+    {
+        return "/v3/application/shops/{$this->shopId}/payment-account/ledger-entries/payments";
+    }
 
-	public function resolveEndpoint(): string
-	{
-		return "/v3/application/shops/{$this->shopId}/payment-account/ledger-entries/payments";
-	}
+    /**
+     * @param  int  $shopId  The unique positive non-zero numeric ID for an Etsy Shop.
+     */
+    public function __construct(
+        protected int $shopId,
+        protected array $ledgerEntryIds,
+    ) {}
 
-
-	/**
-	 * @param int $shopId The unique positive non-zero numeric ID for an Etsy Shop.
-	 * @param array $ledgerEntryIds
-	 */
-	public function __construct(
-		protected int $shopId,
-		protected array $ledgerEntryIds,
-	) {
-	}
-
-
-	public function defaultQuery(): array
-	{
-		return array_filter(['ledger_entry_ids' => $this->ledgerEntryIds]);
-	}
+    public function defaultQuery(): array
+    {
+        return array_filter(['ledger_entry_ids' => $this->ledgerEntryIds]);
+    }
 }

@@ -1,8 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Hdecom\EtsySdk\Requests\User;
 
-use DateTime;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 
@@ -23,20 +24,14 @@ use Saloon\Http\Request;
  */
 class GetUser extends Request
 {
-	protected Method $method = Method::GET;
+    protected Method $method = Method::GET;
 
+    public function resolveEndpoint(): string
+    {
+        return "/v3/application/users/{$this->userId}";
+    }
 
-	public function resolveEndpoint(): string
-	{
-		return "/v3/application/users/{$this->userId}";
-	}
-
-
-	/**
-	 * @param int $userId
-	 */
-	public function __construct(
-		protected int $userId,
-	) {
-	}
+    public function __construct(
+        protected int $userId,
+    ) {}
 }

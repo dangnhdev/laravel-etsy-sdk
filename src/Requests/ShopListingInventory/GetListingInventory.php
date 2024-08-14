@@ -1,8 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Hdecom\EtsySdk\Requests\ShopListingInventory;
 
-use DateTime;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 
@@ -22,30 +23,26 @@ use Saloon\Http\Request;
  */
 class GetListingInventory extends Request
 {
-	protected Method $method = Method::GET;
+    protected Method $method = Method::GET;
 
+    public function resolveEndpoint(): string
+    {
+        return "/v3/application/listings/{$this->listingId}/inventory";
+    }
 
-	public function resolveEndpoint(): string
-	{
-		return "/v3/application/listings/{$this->listingId}/inventory";
-	}
+    /**
+     * @param  int  $listingId  The numeric ID for the [listing](/documentation/reference#tag/ShopListing) associated to this transaction.
+     * @param  null|bool  $showDeleted  A boolean value for inventory whether to include deleted products and their offerings. Default value is false.
+     * @param  null|string  $includes  An enumerated string that attaches a valid association. Default value is null.
+     */
+    public function __construct(
+        protected int $listingId,
+        protected ?bool $showDeleted = null,
+        protected ?string $includes = null,
+    ) {}
 
-
-	/**
-	 * @param int $listingId The numeric ID for the [listing](/documentation/reference#tag/ShopListing) associated to this transaction.
-	 * @param null|bool $showDeleted A boolean value for inventory whether to include deleted products and their offerings. Default value is false.
-	 * @param null|string $includes An enumerated string that attaches a valid association. Default value is null.
-	 */
-	public function __construct(
-		protected int $listingId,
-		protected ?bool $showDeleted = null,
-		protected ?string $includes = null,
-	) {
-	}
-
-
-	public function defaultQuery(): array
-	{
-		return array_filter(['show_deleted' => $this->showDeleted, 'includes' => $this->includes]);
-	}
+    public function defaultQuery(): array
+    {
+        return array_filter(['show_deleted' => $this->showDeleted, 'includes' => $this->includes]);
+    }
 }

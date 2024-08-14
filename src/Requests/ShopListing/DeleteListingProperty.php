@@ -1,8 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Hdecom\EtsySdk\Requests\ShopListing;
 
-use DateTime;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 
@@ -20,24 +21,21 @@ use Saloon\Http\Request;
  */
 class DeleteListingProperty extends Request
 {
-	protected Method $method = Method::DELETE;
+    protected Method $method = Method::DELETE;
 
+    public function resolveEndpoint(): string
+    {
+        return "/v3/application/shops/{$this->shopId}/listings/{$this->listingId}/properties/{$this->propertyId}";
+    }
 
-	public function resolveEndpoint(): string
-	{
-		return "/v3/application/shops/{$this->shopId}/listings/{$this->listingId}/properties/{$this->propertyId}";
-	}
-
-
-	/**
-	 * @param int $shopId The unique positive non-zero numeric ID for an Etsy Shop.
-	 * @param int $listingId The numeric ID for the [listing](/documentation/reference#tag/ShopListing) associated to this transaction.
-	 * @param int $propertyId The unique ID of an Etsy [listing property](/documentation/reference#operation/getListingProperties).
-	 */
-	public function __construct(
-		protected int $shopId,
-		protected int $listingId,
-		protected int $propertyId,
-	) {
-	}
+    /**
+     * @param  int  $shopId  The unique positive non-zero numeric ID for an Etsy Shop.
+     * @param  int  $listingId  The numeric ID for the [listing](/documentation/reference#tag/ShopListing) associated to this transaction.
+     * @param  int  $propertyId  The unique ID of an Etsy [listing property](/documentation/reference#operation/getListingProperties).
+     */
+    public function __construct(
+        protected int $shopId,
+        protected int $listingId,
+        protected int $propertyId,
+    ) {}
 }

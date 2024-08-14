@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Hdecom\EtsySdk\Resource;
 
 use Hdecom\EtsySdk\Requests\Other\Ping;
@@ -9,14 +11,13 @@ use Saloon\Contracts\Response;
 
 class Other extends Resource
 {
-	public function ping(): Response
-	{
-		return $this->connector->send(new Ping());
-	}
+    public function ping(): Response
+    {
+        return $this->connector->send(new Ping);
+    }
 
-
-	public function tokenScopes(): Response
-	{
-		return $this->connector->send(new TokenScopes());
-	}
+    public function tokenScopes(): Response
+    {
+        return $this->connector->send(new TokenScopes);
+    }
 }

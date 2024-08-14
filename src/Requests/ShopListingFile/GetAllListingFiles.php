@@ -1,8 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Hdecom\EtsySdk\Requests\ShopListingFile;
 
-use DateTime;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 
@@ -21,22 +22,19 @@ use Saloon\Http\Request;
  */
 class GetAllListingFiles extends Request
 {
-	protected Method $method = Method::GET;
+    protected Method $method = Method::GET;
 
+    public function resolveEndpoint(): string
+    {
+        return "/v3/application/shops/{$this->shopId}/listings/{$this->listingId}/files";
+    }
 
-	public function resolveEndpoint(): string
-	{
-		return "/v3/application/shops/{$this->shopId}/listings/{$this->listingId}/files";
-	}
-
-
-	/**
-	 * @param int $listingId The numeric ID for the [listing](/documentation/reference#tag/ShopListing) associated to this transaction.
-	 * @param int $shopId The unique positive non-zero numeric ID for an Etsy Shop.
-	 */
-	public function __construct(
-		protected int $listingId,
-		protected int $shopId,
-	) {
-	}
+    /**
+     * @param  int  $listingId  The numeric ID for the [listing](/documentation/reference#tag/ShopListing) associated to this transaction.
+     * @param  int  $shopId  The unique positive non-zero numeric ID for an Etsy Shop.
+     */
+    public function __construct(
+        protected int $listingId,
+        protected int $shopId,
+    ) {}
 }

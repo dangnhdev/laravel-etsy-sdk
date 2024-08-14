@@ -1,8 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Hdecom\EtsySdk\Requests\ShopListingVideo;
 
-use DateTime;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 
@@ -20,20 +21,17 @@ use Saloon\Http\Request;
  */
 class GetListingVideos extends Request
 {
-	protected Method $method = Method::GET;
+    protected Method $method = Method::GET;
 
+    public function resolveEndpoint(): string
+    {
+        return "/v3/application/listings/{$this->listingId}/videos";
+    }
 
-	public function resolveEndpoint(): string
-	{
-		return "/v3/application/listings/{$this->listingId}/videos";
-	}
-
-
-	/**
-	 * @param int $listingId The numeric ID for the [listing](/documentation/reference#tag/ShopListing) associated to this transaction.
-	 */
-	public function __construct(
-		protected int $listingId,
-	) {
-	}
+    /**
+     * @param  int  $listingId  The numeric ID for the [listing](/documentation/reference#tag/ShopListing) associated to this transaction.
+     */
+    public function __construct(
+        protected int $listingId,
+    ) {}
 }

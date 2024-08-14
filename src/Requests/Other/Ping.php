@@ -1,8 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Hdecom\EtsySdk\Requests\Other;
 
-use DateTime;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 
@@ -20,16 +21,12 @@ use Saloon\Http\Request;
  */
 class Ping extends Request
 {
-	protected Method $method = Method::GET;
+    protected Method $method = Method::GET;
 
+    public function resolveEndpoint(): string
+    {
+        return '/v3/application/openapi-ping';
+    }
 
-	public function resolveEndpoint(): string
-	{
-		return "/v3/application/openapi-ping";
-	}
-
-
-	public function __construct()
-	{
-	}
+    public function __construct() {}
 }

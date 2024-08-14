@@ -1,8 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Hdecom\EtsySdk\Requests\ShopListingInventory;
 
-use DateTime;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 
@@ -23,20 +24,17 @@ use Saloon\Http\Request;
  */
 class UpdateListingInventory extends Request
 {
-	protected Method $method = Method::PUT;
+    protected Method $method = Method::PUT;
 
+    public function resolveEndpoint(): string
+    {
+        return "/v3/application/listings/{$this->listingId}/inventory";
+    }
 
-	public function resolveEndpoint(): string
-	{
-		return "/v3/application/listings/{$this->listingId}/inventory";
-	}
-
-
-	/**
-	 * @param int $listingId The numeric ID for the [listing](/documentation/reference#tag/ShopListing) associated to this transaction.
-	 */
-	public function __construct(
-		protected int $listingId,
-	) {
-	}
+    /**
+     * @param  int  $listingId  The numeric ID for the [listing](/documentation/reference#tag/ShopListing) associated to this transaction.
+     */
+    public function __construct(
+        protected int $listingId,
+    ) {}
 }

@@ -1,8 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Hdecom\EtsySdk\Requests\ShopShippingProfile;
 
-use DateTime;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 
@@ -24,24 +25,21 @@ use Saloon\Http\Request;
  */
 class DeleteShopShippingProfileDestination extends Request
 {
-	protected Method $method = Method::DELETE;
+    protected Method $method = Method::DELETE;
 
+    public function resolveEndpoint(): string
+    {
+        return "/v3/application/shops/{$this->shopId}/shipping-profiles/{$this->shippingProfileId}/destinations/{$this->shippingProfileDestinationId}";
+    }
 
-	public function resolveEndpoint(): string
-	{
-		return "/v3/application/shops/{$this->shopId}/shipping-profiles/{$this->shippingProfileId}/destinations/{$this->shippingProfileDestinationId}";
-	}
-
-
-	/**
-	 * @param int $shopId The unique positive non-zero numeric ID for an Etsy Shop.
-	 * @param int $shippingProfileId The numeric ID of the [shipping profile](/documentation/reference#operation/getShopShippingProfile) associated with the listing. Required when listing type is `physical`.
-	 * @param int $shippingProfileDestinationId The numeric ID of the shipping profile destination in the [shipping profile](/documentation/reference#tag/Shop-ShippingProfile) associated with the listing.
-	 */
-	public function __construct(
-		protected int $shopId,
-		protected int $shippingProfileId,
-		protected int $shippingProfileDestinationId,
-	) {
-	}
+    /**
+     * @param  int  $shopId  The unique positive non-zero numeric ID for an Etsy Shop.
+     * @param  int  $shippingProfileId  The numeric ID of the [shipping profile](/documentation/reference#operation/getShopShippingProfile) associated with the listing. Required when listing type is `physical`.
+     * @param  int  $shippingProfileDestinationId  The numeric ID of the shipping profile destination in the [shipping profile](/documentation/reference#tag/Shop-ShippingProfile) associated with the listing.
+     */
+    public function __construct(
+        protected int $shopId,
+        protected int $shippingProfileId,
+        protected int $shippingProfileDestinationId,
+    ) {}
 }

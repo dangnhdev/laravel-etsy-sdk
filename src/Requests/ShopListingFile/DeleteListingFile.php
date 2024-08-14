@@ -1,8 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Hdecom\EtsySdk\Requests\ShopListingFile;
 
-use DateTime;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 
@@ -22,24 +23,21 @@ use Saloon\Http\Request;
  */
 class DeleteListingFile extends Request
 {
-	protected Method $method = Method::DELETE;
+    protected Method $method = Method::DELETE;
 
+    public function resolveEndpoint(): string
+    {
+        return "/v3/application/shops/{$this->shopId}/listings/{$this->listingId}/files/{$this->listingFileId}";
+    }
 
-	public function resolveEndpoint(): string
-	{
-		return "/v3/application/shops/{$this->shopId}/listings/{$this->listingId}/files/{$this->listingFileId}";
-	}
-
-
-	/**
-	 * @param int $shopId The unique positive non-zero numeric ID for an Etsy Shop.
-	 * @param int $listingId The numeric ID for the [listing](/documentation/reference#tag/ShopListing) associated to this transaction.
-	 * @param int $listingFileId The unique numeric ID of a file associated with a digital listing.
-	 */
-	public function __construct(
-		protected int $shopId,
-		protected int $listingId,
-		protected int $listingFileId,
-	) {
-	}
+    /**
+     * @param  int  $shopId  The unique positive non-zero numeric ID for an Etsy Shop.
+     * @param  int  $listingId  The numeric ID for the [listing](/documentation/reference#tag/ShopListing) associated to this transaction.
+     * @param  int  $listingFileId  The unique numeric ID of a file associated with a digital listing.
+     */
+    public function __construct(
+        protected int $shopId,
+        protected int $listingId,
+        protected int $listingFileId,
+    ) {}
 }
